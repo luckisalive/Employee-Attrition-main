@@ -1,0 +1,110 @@
+{
+  "results": [
+    {
+      "name": "Logistic Regression",
+      "roc_auc": 0.8037729347919718,
+      "threshold": 0.7824870775413353,
+      "f1_minority": 0.5,
+      "precision_minority": 0.6060606060606061,
+      "recall_minority": 0.425531914893617,
+      "confusion_matrix": [
+        [
+          234,
+          13
+        ],
+        [
+          27,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "Random Forest",
+      "roc_auc": 0.7773279352226721,
+      "threshold": 0.3831992684959367,
+      "f1_minority": 0.49230769230769234,
+      "precision_minority": 0.3855421686746988,
+      "recall_minority": 0.6808510638297872,
+      "confusion_matrix": [
+        [
+          196,
+          51
+        ],
+        [
+          15,
+          32
+        ]
+      ]
+    },
+    {
+      "name": "XGBoost",
+      "roc_auc": 0.7730209320354897,
+      "threshold": 0.27357906103134155,
+      "f1_minority": 0.5132743362831859,
+      "precision_minority": 0.4393939393939394,
+      "recall_minority": 0.6170212765957447,
+      "confusion_matrix": [
+        [
+          210,
+          37
+        ],
+        [
+          18,
+          29
+        ]
+      ]
+    }
+  ],
+  "best_model": "XGBoost",
+  "best_model_key": "xgboost",
+  "threshold": 0.27357906103134155,
+  "feature_importance": {
+    "MonthlyIncome": 0.07431620681054522,
+    "Age": 0.06157288361969259,
+    "TotalWorkingYears": 0.05373806797268101,
+    "OverTime": 0.047971969636416284,
+    "YearsAtCompany": 0.047465236571050215,
+    "DailyRate": 0.04135465114777202,
+    "IncomeVsLevelMedian": 0.040886168565494055,
+    "YearsWithCurrManager": 0.04076858019103907,
+    "MonthlyRate": 0.03603939407255105,
+    "StockOptionLevel": 0.03595459495664389,
+    "DistanceFromHome": 0.035929053193740144,
+    "HourlyRate": 0.03343757098652912,
+    "NumCompaniesWorked": 0.03141102770147157,
+    "JobLevel": 0.03078302021306031,
+    "YearsInCurrentRole": 0.027672239961806726,
+    "PercentSalaryHike": 0.026732080383599987,
+    "TenureRatio": 0.025952451013121065,
+    "EnvironmentSatisfaction": 0.025255552234036693,
+    "JobSatisfaction": 0.022068996213102036,
+    "PromotionStagnation": 0.022068329349643357,
+    "JobInvolvement": 0.01874200524731771,
+    "WorkLifeBalance": 0.018558170496243122,
+    "MaritalStatus_Single": 0.0184305497553411,
+    "RelationshipSatisfaction": 0.017206134089012972,
+    "TrainingTimesLastYear": 0.016480428383741023,
+    "YearsSinceLastPromotion": 0.015655867556927525,
+    "Education": 0.015490563365255866,
+    "BusinessTravel_Travel_Frequently": 0.011540684313476103,
+    "Department_Sales": 0.01009866714782246,
+    "Department_Research & Development": 0.009741398333101788,
+    "JobRole_Laboratory Technician": 0.009336502481382783,
+    "JobRole_Sales Executive": 0.009324264314328612,
+    "JobRole_Research Scientist": 0.009181660951165621,
+    "EducationField_Medical": 0.007008796564481245,
+    "MaritalStatus_Married": 0.006104069627909989,
+    "Gender": 0.005484541379900753,
+    "JobRole_Sales Representative": 0.005156500234780992,
+    "BusinessTravel_Travel_Rarely": 0.005016231605761421,
+    "EducationField_Life Sciences": 0.00438581515125481,
+    "EducationField_Marketing": 0.004244772524068088,
+    "JobRole_Manufacturing Director": 0.003848886213253756,
+    "EducationField_Technical Degree": 0.0036955614364197545,
+    "PerformanceRating": 0.003421543822663462,
+    "JobRole_Manager": 0.0032717778236174364,
+    "JobRole_Research Director": 0.00288443694203611,
+    "EducationField_Other": 0.002724795359510417,
+    "JobRole_Human Resources": 0.0015873000852287395
+  }
+}

@@ -1,59 +1,54 @@
 # Employee Attrition Analysis
 
-This repository contains a comprehensive analysis of employee attrition, aiming to identify key factors contributing to employee turnover and to develop predictive models to anticipate such events. The analysis is conducted using Python, leveraging various data science and machine learning libraries.
+A classification + dashboard project on the IBM HR Analytics dataset
+(1,470 employees, 35 raw features, 16.1% attrition rate).
 
-## Project Overview
+## Structure
 
-Employee attrition refers to the gradual reduction of the workforce due to resignations, retirements, or other factors. Understanding and predicting attrition is crucial for organizations to maintain operational efficiency and employee satisfaction. This project explores the IBM HR Analytics Employee Attrition & Performance dataset to:
+- `data_pipeline.py` — cleaning, feature engineering, encoding. Run standalone
+  to regenerate `processed_attrition.csv`.
+- `model_training.py` — trains Logistic Regression, Random Forest, and XGBoost;
+  handles class imbalance; tunes the decision threshold; saves the best model
+  and metrics.
+- `app.py` — Streamlit dashboard (KPIs, driver analysis, model comparison,
+  individual employee risk scorer).
 
-- Analyze the factors influencing employee attrition.
-- Develop predictive models to forecast which employees are likely to leave.
-- Provide actionable insights to help in employee retention strategies.
+## Running it
+
+```bash
+pip install -r requirements.txt
+python model_training.py   # trains models, writes best_model.joblib etc.
+streamlit run app.py
+```
+
+## Honest notes on this project (read before presenting it)
+
+**The dataset is imbalanced (84% stayed / 16% left).** Accuracy is reported
+nowhere as a headline metric because it's misleading here — a model that
+predicts "no one leaves" scores ~84% while being useless. Precision/recall/F1
+on the minority ("Left") class and ROC-AUC are used instead, and the decision
+threshold is tuned per-model rather than left at the sklearn default of 0.5.
+
+**Model selection involved a real trade-off, not a clean win.** XGBoost was
+selected as the deployed model because it had the best F1 on the minority
+class (0.513), but Logistic Regression had the higher ROC-AUC (0.804 vs
+0.773). If someone asks "why not Logistic Regression," the honest answer is
+the selection metric (F1 on `Left`) was chosen upfront and XGBoost won on it —
+not that XGBoost is unambiguously the better model.
+
+**Recall on people who actually leave tops out well below 1.0** (roughly
+0.6–0.8 depending on model and threshold). This means the model will still
+miss real resignations. Frame it to reviewers as a prioritization tool for
+HR follow-up, not a certainty machine.
+
+**"Drivers of attrition" are associations, not causes.** Feature importance
+comes from a Random Forest trained on observational data, not a randomized
+experiment. The dashboard's Driver tab says this explicitly — don't strip
+that caveat out if you present this, since claiming causation from feature
+importance is a common and easily-caught mistake in interviews.
 
 ## Dataset
 
-The dataset used in this analysis is the [IBM HR Analytics Employee Attrition & Performance dataset](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset). It includes various features related to employee demographics, job roles, and performance metrics.
-
-## Repository Contents
-
-- `main.ipynb`: Jupyter Notebook containing the complete analysis, including data preprocessing, exploratory data analysis (EDA), model building, and evaluation.
-
-## Key Features Analyzed
-
-- **Age**: Employee's age.
-- **Attrition**: Whether the employee has left the company.
-- **BusinessTravel**: Frequency of travel for business purposes.
-- **Department**: Department in which the employee works.
-- **DistanceFromHome**: Distance between the employee's home and workplace.
-- **EducationField**: Field of education.
-- **Gender**: Employee's gender.
-- **JobRole**: Role of the employee within the company.
-- **MaritalStatus**: Marital status of the employee.
-- **MonthlyIncome**: Monthly income of the employee.
-- **OverTime**: Whether the employee works overtime.
-- **TotalWorkingYears**: Total years of professional experience.
-- **YearsAtCompany**: Number of years spent at the current company.
-- **YearsInCurrentRole**: Number of years in the current role.
-- **YearsSinceLastPromotion**: Years since the last promotion.
-- **YearsWithCurrManager**: Years working with the current manager.
-
-## Analysis and Modeling
-
-The analysis follows these steps:
-
-1. **Data Preprocessing**: Handling missing values, encoding categorical variables, and feature scaling.
-2. **Exploratory Data Analysis (EDA)**: Visualizing data distributions and relationships between features and attrition.
-3. **Model Building**: Developing predictive models using algorithms such as Logistic Regression, Decision Trees, and Random Forests.
-4. **Model Evaluation**: Assessing model performance using metrics like accuracy, precision, recall, F1-score, ROC-AUC, and log loss.
-
-## Results
-
-The models developed provide insights into the factors that contribute most significantly to employee attrition. Key findings include:
-
-- Employees with higher overtime are more likely to leave.
-- Job roles and departments have varying attrition rates.
-- Longer tenure with the current manager correlates with lower attrition.
-
-## Conclusion
-
-Understanding employee attrition through data analysis enables organizations to implement targeted strategies to improve employee retention. By identifying the key factors that influence attrition, companies can take proactive measures to enhance employee satisfaction and reduce turnover.
+Standard IBM HR Analytics Employee Attrition dataset. Constant columns
+(`EmployeeCount`, `StandardHours`, `Over18`) and the row-ID column
+(`EmployeeNumber`) are dropped in the pipeline since they carry no signal.
